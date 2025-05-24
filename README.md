@@ -1,6 +1,6 @@
 # Wallet Dashboard
 
-A React-based wallet dashboard built with Next.js that connects to MetaMask and displays wallet information including ETH balance and DAI token balance.
+A modern, animated React-based wallet dashboard for MetaMask integration with real-time balance tracking and beautiful glassmorphism UI.
 
 ## Features
 
@@ -154,12 +154,32 @@ src/
 
 No environment variables required for basic functionality. The app connects directly to MetaMask's injected provider.
 
+## Development Approach
 
+### **Architecture & State Management**
 
+- **Context + useReducer Pattern**: Centralized state management using React Context with useReducer for predictable state updates
+- **Type-Safe Actions**: Strongly typed Redux-style actions for wallet connection, balance updates, and error handling
+- **Separation of Concerns**: Clean separation between UI components and business logic through custom hooks
 
+### **Technology Stack**
 
+- **Next.js 15**: App Router with React Server Components for optimal performance
+- **TypeScript**: Full type safety throughout the application with strict mode enabled
+- **Tailwind CSS**: Utility-first styling with custom glassmorphism effects and responsive design
+- **Framer Motion**: Smooth animations and micro-interactions for enhanced UX
+- **ethers.js v6**: Modern Web3 library for Ethereum blockchain interactions
 
+### **MetaMask Integration Strategy**
 
+- **Explicit Provider Detection**: Specifically targets MetaMask extension using `window.ethereum.isMetaMask`
+- **Permission-First Approach**: Uses `wallet_requestPermissions` for forced account selection
+- **Graceful Fallbacks**: Robust error handling for various connection scenarios
+- **Real-time Updates**: Automatic reconnection on account/network changes via event listeners
 
+### **Performance Optimizations**
 
-
+- **useCallback/useMemo**: Optimized re-renders with proper memoization
+- **Code Splitting**: Automatic code splitting via Next.js
+- **Type-Only Imports**: Reduced bundle size with TypeScript type-only imports
+- **Efficient Re-renders**: Strategic state updates to minimize unnecessary renders
