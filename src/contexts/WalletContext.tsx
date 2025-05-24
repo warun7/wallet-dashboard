@@ -22,6 +22,26 @@ const ERC20_ABI = [
   "function symbol() view returns (string)",
 ];
 
+// Helper function to detect MetaMask specifically
+const isMetaMaskInstalled = (): boolean => {
+  return (
+    typeof window !== "undefined" &&
+    typeof window.ethereum !== "undefined" &&
+    window.ethereum.isMetaMask === true
+  );
+};
+
+// Helper function to get MetaMask provider
+const getMetaMaskProvider = () => {
+  if (!isMetaMaskInstalled()) {
+    throw new Error(
+      "MetaMask is not installed. Please install MetaMask extension from https://metamask.io"
+    );
+  }
+  // TypeScript assertion since we've verified MetaMask is installed
+  return window.ethereum!;
+};
+
 // Initial state
 const initialState: WalletState = {
   isConnected: false,
@@ -156,43 +176,50 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
   // Connect to MetaMask
   const connectWallet = useCallback(async () => {
     try {
-      console.log("Starting wallet connection...");
+      console.log("🚀 Starting MetaMask connection...");
       dispatch({ type: "SET_LOADING", payload: true });
 
-      if (!window.ethereum) {
-        console.log("MetaMask not found");
-        throw new Error("MetaMask is not installed");
-      }
-
-      console.log("MetaMask detected, requesting permissions...");
-
-      // Try to request permissions to force account selection (MetaMask specific)
-      try {
-        if (window.ethereum.request) {
-          await window.ethereum.request({
-            method: "wallet_requestPermissions",
-            params: [{ eth_accounts: {} }],
-          });
-          console.log("Permissions granted via wallet_requestPermissions");
-        }
-      } catch {
-        console.log(
-          "wallet_requestPermissions not supported, using fallback"
+      // Use helper function to check MetaMask installation
+      if (!isMetaMaskInstalled()) {
+        console.log("❌ MetaMask not installed");
+        throw new Error(
+          "MetaMask is not installed. Please install MetaMask extension from https://metamask.io to continue."
         );
-        // Fallback: This is normal for non-MetaMask wallets
-        // We'll still get account selection if the user hasn't connected before
       }
 
-      console.log("Getting accounts...");
+      console.log("✅ MetaMask detected, requesting connection...");
+      const ethereum = getMetaMaskProvider();
+
+      // Force MetaMask to open and request account selection
+      try {
+        // First, request permissions to force MetaMask popup
+        await ethereum.request!({
+          method: "wallet_requestPermissions",
+          params: [{ eth_accounts: {} }],
+        });
+        console.log("✅ MetaMask permissions granted");
+      } catch (permissionError: any) {
+        // If wallet_requestPermissions fails, try direct account request
+        console.log(
+          "ℹ️ Permission request failed, trying direct account access:",
+          permissionError.message
+        );
+      }
+
+      console.log("✅ Requesting MetaMask accounts...");
       const provider = new ethers.BrowserProvider(
-        window.ethereum as ethers.Eip1193Provider
+        ethereum as ethers.Eip1193Provider
       );
+
+      // This will open MetaMask if not already connected
       const accounts = await provider.send("eth_requestAccounts", []);
-      console.log("Accounts received:", accounts);
+      console.log("📝 MetaMask accounts received:", accounts);
 
       if (accounts.length === 0) {
-        console.log("No accounts found");
-        throw new Error("No accounts found");
+        console.log("❌ No accounts found in MetaMask");
+        throw new Error(
+          "No accounts found in MetaMask. Please make sure you have at least one account created."
+        );
       }
 
       const signer = await provider.getSigner();
@@ -201,7 +228,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       const chainId = Number(network.chainId);
       const networkName = NETWORK_NAMES[chainId] || `Chain ${chainId}`;
 
-      console.log("Wallet connected:", { address, chainId, networkName });
+      console.log("✅ MetaMask connected:", { address, chainId, networkName });
 
       dispatch({
         type: "SET_WALLET_INFO",
@@ -209,16 +236,18 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       });
 
       // Fetch balances and ENS
-      console.log("Fetching balances...");
+      console.log("📊 Fetching balances...");
       await fetchBalances(provider, address, chainId);
       await fetchENSName(provider, address);
-      console.log("Wallet connection complete!");
+      console.log("✅ MetaMask connection complete!");
     } catch (error) {
-      console.error("Wallet connection failed:", error);
+      console.error("❌ MetaMask connection failed:", error);
       dispatch({
         type: "SET_ERROR",
         payload:
-          error instanceof Error ? error.message : "Failed to connect wallet",
+          error instanceof Error
+            ? error.message
+            : "Failed to connect to MetaMask",
       });
     }
   }, [fetchBalances, fetchENSName]);

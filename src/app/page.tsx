@@ -93,8 +93,8 @@ export default function Home() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.6 }}
             >
-              Connect your MetaMask wallet to view your balances and manage your
-              crypto assets with ease
+              Connect your MetaMask extension to view your balances and manage
+              your crypto assets with ease
             </motion.p>
 
             {/* Decorative underline */}
@@ -122,10 +122,10 @@ export default function Home() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5, duration: 0.6 }}
               >
-                Connect with MetaMask to view your wallet information and
-                balances. <br />
+                Connect with MetaMask extension to view your wallet information
+                and balances. <br />
                 <span className="text-xs opacity-75">
-                  You can switch between different accounts anytime.
+                  You can switch between different MetaMask accounts anytime.
                 </span>
               </motion.p>
             </motion.div>

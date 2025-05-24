@@ -138,7 +138,7 @@ export function ConnectWallet() {
                       animate={{ opacity: [1, 0.5, 1] }}
                       transition={{ duration: 1, repeat: Infinity }}
                     >
-                      Connecting...
+                      Connecting to MetaMask...
                     </motion.span>
                   </motion.div>
                 ) : (
@@ -165,7 +165,7 @@ export function ConnectWallet() {
                         d="M13 10V3L4 14h7v7l9-11h-7z"
                       />
                     </motion.svg>
-                    Connect Wallet
+                    Connect MetaMask
                   </motion.div>
                 )}
               </AnimatePresence>
