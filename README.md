@@ -154,77 +154,12 @@ src/
 
 No environment variables required for basic functionality. The app connects directly to MetaMask's injected provider.
 
-## Deployment
 
-This project can be easily deployed to:
 
-- **Vercel** (recommended for Next.js)
-- **Netlify**
-- **GitHub Pages**
-- Any static hosting service
 
-### Deploy to Vercel
 
-1. Push code to GitHub
-2. Connect repository to Vercel
-3. Deploy automatically
 
-## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
 
-## License
 
-MIT License - see LICENSE file for details
 
-## Acknowledgments
-
-- Built with Next.js and Tailwind CSS
-- Uses ethers.js for Web3 interactions
-- MetaMask for wallet connectivity
-- Heroicons for UI icons
-
-## Testing with Test Networks
-
-### Getting Test Coins
-
-To test the wallet dashboard without spending real money, use test networks:
-
-#### **Sepolia Testnet** (Recommended)
-
-- **Test ETH Faucets**:
-  - Alchemy: https://sepoliafaucet.com/
-  - Infura: https://www.infura.io/faucet/sepolia
-  - QuickNode: https://faucet.quicknode.com/ethereum/sepolia
-  - Chainlink: https://faucets.chain.link/sepolia
-
-#### **Setup Steps**:
-
-1. **Add Sepolia to MetaMask**:
-
-   - Network Name: `Sepolia`
-   - RPC URL: `https://sepolia.infura.io/v3/YOUR_PROJECT_ID` or `https://rpc.sepolia.org`
-   - Chain ID: `11155111`
-   - Currency Symbol: `ETH`
-   - Block Explorer: `https://sepolia.etherscan.io`
-
-2. **Get Test ETH**:
-
-   - Copy your wallet address
-   - Visit a faucet and request test ETH
-   - Wait 1-2 minutes for the transaction
-
-3. **Test the Dashboard**:
-   - Switch MetaMask to Sepolia
-   - Connect your wallet to see test balances
-
-#### **Test DAI Tokens**:
-
-- Aave Faucet: https://staging.aave.com/faucet/
-- Compound Faucet: https://app.compound.finance/
-
-## Usage

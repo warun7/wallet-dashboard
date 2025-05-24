@@ -15,17 +15,6 @@ const buttonVariants = {
   tap: { scale: 0.95 },
 };
 
-const pulseVariants = {
-  pulse: {
-    scale: [1, 1.1, 1],
-    transition: {
-      duration: 2,
-      repeat: Infinity,
-      ease: "easeInOut",
-    },
-  },
-};
-
 const errorVariants = {
   hidden: { opacity: 0, y: 20, scale: 0.9 },
   visible: {

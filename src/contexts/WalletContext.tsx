@@ -198,11 +198,15 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
           params: [{ eth_accounts: {} }],
         });
         console.log("✅ MetaMask permissions granted");
-      } catch (permissionError: any) {
+      } catch (permissionError: unknown) {
         // If wallet_requestPermissions fails, try direct account request
+        const errorMessage =
+          permissionError instanceof Error
+            ? permissionError.message
+            : "Unknown error";
         console.log(
           "ℹ️ Permission request failed, trying direct account access:",
-          permissionError.message
+          errorMessage
         );
       }
 
