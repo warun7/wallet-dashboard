@@ -1,36 +1,230 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wallet Dashboard
+
+A React-based wallet dashboard built with Next.js that connects to MetaMask and displays wallet information including ETH balance and DAI token balance.
+
+## Features
+
+### Core Features ✅
+
+- **MetaMask Integration**: Connect to MetaMask wallet with one click
+- **Wallet Information**: Display wallet address and current network
+- **ETH Balance**: Real-time Ethereum balance display
+- **React Hooks**: Built with modern React functional components and hooks
+- **Dynamic Updates**: Automatically reacts to wallet and network changes
+
+### Bonus Features ✅
+
+- **DAI Token Balance**: Fetch and display DAI token balance using ERC-20 contract
+- **ENS Support**: Show ENS names when available (on mainnet)
+- **Dark/Light Mode**: Toggle between themes with system preference detection
+- **Context Provider**: Global wallet state management using React Context
+- **Multi-Network Support**: Works with Ethereum mainnet, Goerli, Sepolia, and more
+- **Copy Address**: Click to copy wallet address to clipboard
+- **Responsive Design**: Clean, minimal, and mobile-friendly UI
+
+## Tech Stack
+
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Web3**: ethers.js v6
+- **State Management**: React Context + useReducer
+- **Theme**: Custom dark/light mode with localStorage persistence
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- MetaMask browser extension
+- Git
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd wallet-dashboard
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Building for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## Usage
 
-To learn more about Next.js, take a look at the following resources:
+1. **Connect Wallet**: Click the "Connect Wallet" button to connect your MetaMask
+2. **View Information**: See your wallet address, network, and ENS name (if available)
+3. **Check Balances**: View your ETH and DAI token balances
+4. **Refresh**: Click refresh to update balances manually
+5. **Theme Toggle**: Use the theme toggle in the header to switch between light/dark mode
+6. **Copy Address**: Click the copy button next to your address to copy it to clipboard
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Supported Networks
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Ethereum Mainnet (Chain ID: 1)
+- Goerli Testnet (Chain ID: 5)
+- Sepolia Testnet (Chain ID: 11155111)
+- Polygon Mainnet (Chain ID: 137)
+- Mumbai Testnet (Chain ID: 80001)
 
-## Deploy on Vercel
+## Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+src/
+├── app/                 # Next.js app router
+│   ├── layout.tsx      # Root layout with providers
+│   ├── page.tsx        # Main dashboard page
+│   └── globals.css     # Global styles
+├── components/         # React components
+│   ├── ConnectWallet.tsx
+│   ├── WalletInfo.tsx
+│   ├── BalanceDisplay.tsx
+│   └── ThemeToggle.tsx
+├── contexts/           # React contexts
+│   └── WalletContext.tsx
+├── hooks/              # Custom hooks
+│   └── useTheme.ts
+└── types/              # TypeScript types
+    ├── wallet.ts
+    └── global.d.ts
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Key Components
+
+### WalletContext
+
+- Global state management for wallet connection
+- Handles MetaMask integration and Web3 interactions
+- Manages ETH/DAI balance fetching
+- Listens for account and network changes
+
+### ConnectWallet
+
+- Connection button with loading states
+- Error handling and display
+- Connect/disconnect functionality
+
+### WalletInfo
+
+- Displays wallet address with copy functionality
+- Shows current network with status indicator
+- ENS name display when available
+
+### BalanceDisplay
+
+- Real-time ETH and DAI balance display
+- Manual refresh functionality
+- Token icons and formatting
+
+### ThemeToggle
+
+- Dark/light mode switching
+- System preference detection
+- localStorage persistence
+
+## Development
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+
+### Environment Setup
+
+No environment variables required for basic functionality. The app connects directly to MetaMask's injected provider.
+
+## Deployment
+
+This project can be easily deployed to:
+
+- **Vercel** (recommended for Next.js)
+- **Netlify**
+- **GitHub Pages**
+- Any static hosting service
+
+### Deploy to Vercel
+
+1. Push code to GitHub
+2. Connect repository to Vercel
+3. Deploy automatically
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+MIT License - see LICENSE file for details
+
+## Acknowledgments
+
+- Built with Next.js and Tailwind CSS
+- Uses ethers.js for Web3 interactions
+- MetaMask for wallet connectivity
+- Heroicons for UI icons
+
+## Testing with Test Networks
+
+### Getting Test Coins
+
+To test the wallet dashboard without spending real money, use test networks:
+
+#### **Sepolia Testnet** (Recommended)
+
+- **Test ETH Faucets**:
+  - Alchemy: https://sepoliafaucet.com/
+  - Infura: https://www.infura.io/faucet/sepolia
+  - QuickNode: https://faucet.quicknode.com/ethereum/sepolia
+  - Chainlink: https://faucets.chain.link/sepolia
+
+#### **Setup Steps**:
+
+1. **Add Sepolia to MetaMask**:
+
+   - Network Name: `Sepolia`
+   - RPC URL: `https://sepolia.infura.io/v3/YOUR_PROJECT_ID` or `https://rpc.sepolia.org`
+   - Chain ID: `11155111`
+   - Currency Symbol: `ETH`
+   - Block Explorer: `https://sepolia.etherscan.io`
+
+2. **Get Test ETH**:
+
+   - Copy your wallet address
+   - Visit a faucet and request test ETH
+   - Wait 1-2 minutes for the transaction
+
+3. **Test the Dashboard**:
+   - Switch MetaMask to Sepolia
+   - Connect your wallet to see test balances
+
+#### **Test DAI Tokens**:
+
+- Aave Faucet: https://staging.aave.com/faucet/
+- Compound Faucet: https://app.compound.finance/
+
+## Usage
